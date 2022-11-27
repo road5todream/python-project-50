@@ -21,21 +21,25 @@ def correct_value(value=''):
         return str(value)
 
 
+def a(value, pr, line):
+    if value['status'] == 'nested':
+        plain(value['value'], pr, line)
+    if value['status'] == 'removed':
+        line.append(forming_line(value['status'], pr) + '\n')
+    if value['status'] == 'added':
+        line.append(forming_line(value['status'],
+                                 pr, value['value']) + '\n')
+    if value['status'] == 'changed':
+        line.append(forming_line(value['status'], pr, value['old'],
+                                 value['new']) + '\n')
+
+
 def plain(dictionary, path='', line=''):
     if line == '':
         line = []
     for key, value in dictionary.items():
         pr = path + '.' + key
-        if value['status'] == 'nested':
-            plain(value['value'], pr, line)
-        if value['status'] == 'removed':
-            line.append(forming_line(value['status'], pr) + '\n')
-        if value['status'] == 'added':
-            line.append(forming_line(value['status'],
-                                     pr, value['value']) + '\n')
-        if value['status'] == 'changed':
-            line.append(forming_line(value['status'], pr, value['old'],
-                                     value['new']) + '\n')
+        a(value, pr, line)
     result = ''.join(line)
     return result[0:len(result) - 1]
 
