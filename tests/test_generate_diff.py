@@ -1,6 +1,5 @@
 from gendiff.generate import generate_diff
 from tests import get_path
-from os.path import splitext
 import pytest
 
 
