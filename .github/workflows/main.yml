@@ -1,0 +1,28 @@
+name: check
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10.0
+      - name: install dependencies
+        run: |
+          pip install poetry flake8 pytest
+          make install
+      - name: Run linter
+        run: make lint
+      - name: Run tests
+        run: make test
+      - name: Code Coverage
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: 1ecd72d734c23f28b92dc7c49d06bc073ba45e4bfc2ce8244932c23bb2723ca7
+        with:
+          coverageCommand: make test-coverage
+          debug: true
