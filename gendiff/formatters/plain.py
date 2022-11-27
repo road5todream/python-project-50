@@ -21,16 +21,16 @@ def correct_value(value=''):
         return str(value)
 
 
-def a(value, pr, line):
+def prepare_plain(value, new_path, line):
     if value['status'] == 'nested':
-        plain(value['value'], pr, line)
+        plain(value['value'], new_path, line)
     if value['status'] == 'removed':
-        line.append(forming_line(value['status'], pr) + '\n')
+        line.append(forming_line(value['status'], new_path) + '\n')
     if value['status'] == 'added':
         line.append(forming_line(value['status'],
-                                 pr, value['value']) + '\n')
+                                 new_path, value['value']) + '\n')
     if value['status'] == 'changed':
-        line.append(forming_line(value['status'], pr, value['old'],
+        line.append(forming_line(value['status'], new_path, value['old'],
                                  value['new']) + '\n')
 
 
@@ -38,8 +38,8 @@ def plain(dictionary, path='', line=''):
     if line == '':
         line = []
     for key, value in dictionary.items():
-        pr = path + '.' + key
-        a(value, pr, line)
+        new_path = path + '.' + key
+        prepare_plain(value, new_path, line)
     result = ''.join(line)
     return result[0:len(result) - 1]
 
