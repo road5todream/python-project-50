@@ -22,7 +22,7 @@ def correct_value(value=''):
 
 
 def plain(dictionary, path='', line=''):
-    if line is '':
+    if line == '':
         line = []
     for key, value in dictionary.items():
         pr = path + '.' + key
