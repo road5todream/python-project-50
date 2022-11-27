@@ -1,0 +1,12 @@
+**/__pycache__
+.DS_Store
+**/.DS_Store
+*.egg-info
+__pycache__
+dist/
+*.pyc
+.venv/
+.coverage
+coverage.xml
+.pytest_cache/
+.vim
