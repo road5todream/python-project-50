@@ -3,13 +3,13 @@ def forming_line(status, path, value1='', value2=''):
     if status == 'removed':
         return arg + status
     elif status == 'added':
-        return f"{arg}{status} with value: {correct_value(value1)}"
+        return f"{arg}{status} with value: {to_str(value1)}"
     elif status == 'changed':
-        return f"{arg}updated. From {correct_value(value1)} " \
-               f"to {correct_value(value2)}"
+        return f"{arg}updated. From {to_str(value1)} " \
+               f"to {to_str(value2)}"
 
 
-def correct_value(value=''):
+def to_str(value=''):
     if isinstance(value, dict):
         value = '[complex value]'
         return value

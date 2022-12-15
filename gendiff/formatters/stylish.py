@@ -12,14 +12,11 @@ def to_str(element, depth):
         return element
 
 
-def new_status(status):
-    if status == 'unchanged':
-        status = '  '
-    elif status == 'added':
-        status = '+ '
-    else:
-        status = '- '
-    return status
+STATUS = {
+    'unchanged': "  ",
+    'added': "+ ",
+    'removed': "- "
+}
 
 
 def stylish(diff, depth=1):
@@ -38,8 +35,8 @@ def stylish(diff, depth=1):
                     to_str(value['new'], depth + 2)) + '\n')
         else:
             line.append(
-                '  ' * depth + new_status(
-                    value['status']) + str(key) + ': ' + str(
+                '  ' * depth + STATUS[
+                    value['status']] + str(key) + ': ' + str(
                     to_str(value['value'], depth + 2)) + '\n')
     result = ''.join(line)
     return result

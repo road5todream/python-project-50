@@ -1,4 +1,4 @@
-from gendiff.generate import generate_diff
+from gendiff.gendiff import generate_diff
 from gendiff.cli import path1, path2, format_name
 
 

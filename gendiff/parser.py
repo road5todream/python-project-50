@@ -3,16 +3,19 @@ import json
 import yaml
 
 
-def prepare_data(path_file: str):
-    extension = splitext(path_file)[1][1:]
-    if extension in ['yaml', 'yml', 'json']:
-        with open(path_file) as f:
-            data = f.read()
-            return data, extension
+def read_file(path_file):
+    with open(path_file) as f:
+        data = f.read()
+        return data
 
 
-def parse(data, forma):
-    if forma == 'json':
+def get_format(path_file):
+    extension = splitext(path_file)[1].lstrip('.')
+    return extension
+
+
+def parse(data, format):
+    if format == 'json':
         return json.loads(data)
-    if forma in ('yml', 'yaml'):
+    if format in ('yml', 'yaml'):
         return yaml.safe_load(data)

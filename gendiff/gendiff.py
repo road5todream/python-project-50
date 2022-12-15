@@ -1,17 +1,9 @@
 from gendiff.formatters import formatter
 from collections import OrderedDict
 from gendiff.parser import parse
-from gendiff.parser import prepare_data
-
-
-def normal_values(file):
-    corr_values = {None: 'null', True: 'true', False: 'false'}
-    for key, val in file.items():
-        if isinstance(val, dict):
-            normal_values(val)
-        elif isinstance(val, (bool, type(None))):
-            file[key] = corr_values[val]
-    return file
+from gendiff.parser import read_file
+from gendiff.parser import get_format
+from gendiff.formatters.normal import normal_values
 
 
 def difference(dic1, dic2):
@@ -39,10 +31,8 @@ def difference(dic1, dic2):
 
 
 def generate_diff(path_file1, path_file2, format='stylish'):
-    data1, forma1 = prepare_data(path_file1)
-    data2, forma2 = prepare_data(path_file2)
-    parc_data1 = parse(data1, forma1)
-    parc_data2 = parse(data2, forma2)
+    parc_data1 = parse(read_file(path_file1), get_format(path_file1))
+    parc_data2 = parse(read_file(path_file2), get_format(path_file2))
     diff = difference(normal_values(parc_data1), normal_values(parc_data2))
     diff = formatter(format)(diff)
     return diff
